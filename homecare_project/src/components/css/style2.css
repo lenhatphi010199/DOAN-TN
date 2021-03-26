@@ -1,0 +1,76 @@
+
+.tongluon{
+    background: rgba(177, 177, 177, 0.589);
+}
+.title{
+    margin-left: 100px;
+}
+.tieude{
+    font-size: 30px;
+    font-family: ui-serif;
+}
+li{
+    font-family: ui-serif;
+    font-size: 17px;
+}
+hr{
+    color: black  !important;
+}
+.card-img-top{
+    width: 440px !important;
+}
+.khoi1{
+    margin-top: 10px;
+    margin-left: 100px !important;
+}
+.tieude2{
+    font-size: 35px;
+    font-family: ui-serif;
+    color: rgb(19, 19, 19);
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 100%;
+}
+
+.tieude3{
+    font-size: 28px;
+    font-family: ui-serif;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 100%;
+}
+.hinh1{
+    margin-left: 221px;
+    height: 400px;
+}
+.hinh1 img{
+    max-width: 100%;
+   
+}
+.mota1{
+    font-size: 28px;
+    font-family: ui-serif;
+    line-height: 34px;
+    margin-top: 50px;
+}
+.hinh2{
+    height: 400px;
+    width: 579px;
+    margin-left: 269px !important;
+}
+.hinh4{
+    height: 300px;
+    width: 100%;
+}
+.tieude3{
+    font-size: 30px;
+    font-family: ui-serif;
+    margin-bottom: 30px;
+}
+.hinh12{
+    height: 300px;
+}
+.khoitong{
+    width: 100%;
+    height: 400px;
+}
