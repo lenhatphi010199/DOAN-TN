@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import "../css/1.css";
 import logo from "../../images/logo_1.png";
 import axios from "axios";
+
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -15,30 +16,67 @@ class Signup extends Component {
       thongtin: "",
     };
   }
+
   submitForm = (event) => {
     event.preventDefault();
-    this.setState({ isRedirect: true });
+    this.setState({ isRedirect: false });
     var user = {
       username: this.state.username,
       email: this.state.email,
       password: this.state.password,
       role: ["user"],
     };
-    axios
-        .post(`http://localhost:8080/api/auth/signup`, user)
-      .then((res) => {
+    axios.post(`http://localhost:8080/api/auth/signup`, user).then((res) => {
+      if (res.status === 400) {
+        alert(res.status.message);
+      } else {
+        alert("đk thanh cong");
         console.log(res);
         console.log(res.data);
-      });
+        this.setState({isRedirect:true})
+      }
+    });
   };
   // lay noi dung text
   noidung = (event) => {
-    const tenContro = event.target.name;
-    const giatri = event.target.value;
-    console.log(tenContro);
-    console.log(giatri);
-    this.setState({ [tenContro]: giatri });
-    
+    // const tenContro = event.target.name;
+    // const giatri = event.target.value;
+    // console.log(tenContro);
+    // console.log(giatri);
+    // this.setState({ [tenContro]: giatri });
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value,
+    });
+    if (event.target.name === "username") {
+      if (event.target.value === "" || event.target.value === null) {
+        this.setState({
+          firstnameError: true,
+        });
+      } else {
+        this.setState({
+          firstnameError: false,
+          firstname: event.target.value,
+        });
+      }
+    }
+    if (event.target.name === "email") {
+      this.validateEmail(event.target.value);
+    }
+    if (event.target.name === "password2") {
+      if (event.target.value !== this.state.password) {
+        this.setState({
+          passwordError: true,
+        });
+      } else {
+        this.setState({
+          passwordError: false,
+          password: event.target.value,
+        });
+      }
+    }
   };
   // lưu giá trị
   getGiaTri = () => {
@@ -49,13 +87,26 @@ class Signup extends Component {
     thongtin += "  Quyền :   " + this.state.role;
     return thongtin;
   };
-
+  //validateEmail
+  validateEmail(email) {
+    const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
+    const result = pattern.test(email);
+    if (result === true) {
+      this.setState({
+        emailError: false,
+        email: email,
+      });
+    } else {
+      this.setState({
+        emailError: true,
+      });
+    }
+  }
   render() {
-    // if (this.state.isRedirect) {
-    //   console.log(this.getGiaTri());
-    //   return <Redirect to="/signin" />;
-    // }
-
+    if (this.state.isRedirect === true) {
+      console.log(this.getGiaTri());
+      return <Redirect to="/signin" />;
+    }
     return (
       <div>
         <div className=" register">
@@ -93,6 +144,13 @@ class Signup extends Component {
                           onChange={(event) => this.noidung(event)}
                         />
                       </div>
+                      {this.state.firstnameError ? (
+                        <span style={{ color: "red" , marginleft: "145px"}}>
+                          LÀM ƠN KHÔNG ĐỂ TRỐNG!
+                        </span>
+                      ) : (
+                        ""
+                      )}
                       <div className="form-group">
                         <input
                           type="password"
@@ -111,25 +169,40 @@ class Signup extends Component {
                           className="form-control"
                           placeholder="Nhập Email......."
                           onChange={(event) => this.noidung(event)}
+                          required
                         />
                       </div>
+                      {this.state.emailError ? (
+                        <span style={{ color: "red" , marginleft: "145px" }}>
+                          LÀM ƠN NHẬP ĐÚNG ĐỊNH DẠNG CỦA EMAIL
+                        </span>
+                      ) : (
+                        ""
+                      )}
                       <div className="form-group ab">
                         <input
                           type="password"
-                          name="password"
+                          name="password2"
                           className="form-control"
                           placeholder="Nhập Lại Mật Khẩu......."
                           onChange={(event) => this.noidung(event)}
                           required
                         />
                       </div>
+                      {this.state.passwordError ? (
+                        <span style={{ color: "red" , marginleft: "145px" }}>
+                          MẬT KHẨU NHẬP VÀO KHÔNG KHỚP!
+                        </span>
+                      ) : (
+                        ""
+                      )}
                     </div>
                     <div className="btnRegister">
                       <div
                         className="dk"
                         onClick={(event) => this.submitForm(event)}
                       >
-                        Đăng Nhập
+                        Đăng Ký
                       </div>
                     </div>
 
