@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ComboContainer = styled.div`
-  height: 500px;
+  height: 630px;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router";
-
 import axios from "axios";
+import { Link } from "react-router-dom";
 import {
   ComboContainer,
   ComboWrapper,
@@ -10,7 +9,6 @@ import {
   ComboHC,
   ComboP,
 } from "./ImpCombo";
-import { Link } from "react-router-dom";
 
 function Combo() {
   const [data, setData] = useState([]);
@@ -31,7 +29,7 @@ function Combo() {
         }
         setIsLoading(false);
       };
-      
+      console.log(data);
       fetchData();
     } catch (err) {
       console.log({ err });
@@ -53,7 +51,6 @@ function Combo() {
                 <ComboH2>{item.name}</ComboH2>
                 <ComboP>{item.information}</ComboP>
                 <Link to={`/detailsCombo/${item.id}`}>Xem Chi Tiết</Link>
-                
               </ComboHC>
             ))}
           </ComboWrapper>

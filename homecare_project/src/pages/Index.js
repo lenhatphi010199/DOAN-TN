@@ -9,26 +9,29 @@ import {
   InfoData,
   InfoDataThree,
   InfoDataTwo,
+  InfoDataFor,
 } from "../components/contents/InfoData";
 import { SliderData } from "../components/banners/SliderData";
 import GlobalStyle from "../globalStyle";
+import ScrollToTop from "../components/ScrollToTop";
 
 function Index() {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggle = () => {
     setIsOpen(!isOpen);
   };
   return (
     <>
+      <ScrollToTop />
       <GlobalStyle />
-      <Navbar toggle={toggle} />
+      <Navbar toggle={toggle} home={true}/>
       <Dropdow isOpen={isOpen} toggle={toggle} />
       <Banner slides={SliderData} />
       <InfoSection {...InfoData} />
+      <Combo />
+      <InfoSection {...InfoDataFor} />
       <InfoSection {...InfoDataTwo} />
       <InfoSection {...InfoDataThree} />
-      <Combo />
       <Footer />
     </>
   );

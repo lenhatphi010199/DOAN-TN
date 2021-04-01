@@ -1,10 +1,13 @@
 import React from "react";
-import Footer from "../components/footers/Footer";
 import Signin from "../components/signin/Signin";
+import ScrollToTop from "../components/ScrollToTop";
+import GlobalStyle from "../globalStyle";
 
 const SigninPage = () => {
   return (
     <>
+      <ScrollToTop />
+      <GlobalStyle />
       <Signin />
     </>
   );

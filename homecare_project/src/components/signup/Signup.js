@@ -27,13 +27,13 @@ class Signup extends Component {
       role: ["user"],
     };
     axios.post(`http://localhost:8080/api/auth/signup`, user).then((res) => {
-      if (res.status === 400) {
-        alert(res.status.message);
-      } else {
+      if (res.status === 200) {
         alert("đk thanh cong");
         console.log(res);
         console.log(res.data);
-        this.setState({isRedirect:true})
+        this.setState({ isRedirect: true });
+      } else {
+        alert("Lỗi");
       }
     });
   };
@@ -145,9 +145,7 @@ class Signup extends Component {
                         />
                       </div>
                       {this.state.firstnameError ? (
-                        <span style={{ color: "red" , marginleft: "145px"}}>
-                          LÀM ƠN KHÔNG ĐỂ TRỐNG!
-                        </span>
+                        <span className="style123">LÀM ƠN KHÔNG ĐỂ TRỐNG!</span>
                       ) : (
                         ""
                       )}
@@ -173,7 +171,7 @@ class Signup extends Component {
                         />
                       </div>
                       {this.state.emailError ? (
-                        <span style={{ color: "red" , marginleft: "145px" }}>
+                        <span className="style12">
                           LÀM ƠN NHẬP ĐÚNG ĐỊNH DẠNG CỦA EMAIL
                         </span>
                       ) : (
@@ -190,7 +188,7 @@ class Signup extends Component {
                         />
                       </div>
                       {this.state.passwordError ? (
-                        <span style={{ color: "red" , marginleft: "145px" }}>
+                        <span className="style12">
                           MẬT KHẨU NHẬP VÀO KHÔNG KHỚP!
                         </span>
                       ) : (

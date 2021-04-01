@@ -4,7 +4,7 @@ import { IoArrowForward, IoArrowBack } from "react-icons/io5";
 
 export const HomeSection = styled.section`
   height: 100vh;
-  max-height: 550px;
+  max-height: 860px;
   position: relative;
   overflow: hidden;
 `;

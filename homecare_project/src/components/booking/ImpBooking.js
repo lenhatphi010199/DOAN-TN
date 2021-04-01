@@ -10,7 +10,7 @@ export const BookingContainer = styled.div`
 `;
 export const BookingWrapper = styled.div`
   width: 100%;
-  height: 150%;
+  height: 100%;
   overflow: auto;
   position: relative;
 `;
@@ -29,11 +29,15 @@ export const BookingContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1600px;
+  font-size: 35px;
   width: calc(100%-100px);
-  color: #fff;
 `;
 export const ContentH1 = styled.h1`
   margin-top: 90px;
+  font-family: "Mulish";
+  font-weight: 900;
+  line-height: 50px;
+  letter-spacing: 0.4em !important;
+  text-transform: uppercase;
+  color: #ffffff;  
 `;
-

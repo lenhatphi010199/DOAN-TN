@@ -38,26 +38,35 @@ export const FormContent = styled.div`
   }
 `;
 
-
-
-
 export const IconLink = styled(Link)`
+  margin-top: 50px;
   transition: all 0.5s ease-in-out;
   &:hover {
     transform: scale(1.3);
   }
+  @media screen and (max-height: 1024px) {
+    margin-bottom: 25px;
+    margin-top: 25px;
+  }
 `;
-
-
 
 export const ImgBg = styled.img`
   width: 100%;
-  height: 150%;
+  height: 100%;
+  object-fit: cover;
   position: absolute;
+  background-position:center;
+  background-size:cover;
+  @media screen and (max-height: 1024px) {
+    height: auto;
+  }
+  @media screen and (max-width: 1024px) {
+    height: 180%;
+  }
 `;
 
 export const Img = styled.img`
   height: 100px;
   width: 200px;
-  position:relative;
+  position: relative;
 `;

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { FaFacebook, FaGoogle } from "react-icons/fa";
-
+import React, { useState, useRef } from "react";
+import { FaGoogle, FaFacebook } from "react-icons/fa";
 import {
-  Form,
+  FormLogin,
   FormH1,
   FormLabel,
   FormButton,
@@ -15,64 +14,128 @@ import {
   FormButtonLinkFb,
   FormButtonLinkGm,
   FormButtonLinkSu,
-  ErrorP
+  ErrorP,
+  Line,
 } from "./ImpSignForm";
+import { useHistory } from "react-router-dom";
+import AuthServices from "../../../servicesApi/auth.services";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
 
-function SignForm({ Login, Error }) {
+const required = (value) => {
+  if (!value) {
+    return <div role="alert">this field is required!</div>;
+  }
+};
 
-  const [details, setDetails] = useState({ email: "", password: "" });
+function SignForm(props) {
+  const history = useHistory();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const form = useRef();
+  const checkBtn = useRef();
 
-  const submitHandler = (e) => {
+  const onChangeUsername = (e) => {
+    const username = e.target.value;
+    setUsername(username);
+  };
+
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    Login(details);  
+    setMessage("");
+    setLoading(true);
+
+    form.current.validateAll();
+    if (checkBtn.current.context._errors.length === 0) {
+      AuthServices.login(username, password).then(
+        () => {
+          history.push("/");
+          window.location.reload();
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.dada &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          setLoading(false);
+          setMessage("Tài khoản hoặc mật khẩu không đúng!");
+        }
+      );
+    } else {
+      setLoading(false);
+    }
   };
 
   return (
     <>
-      <Form onSubmit={submitHandler}>
-        <FormH1>Sign in to your account</FormH1>
+      <FormLogin onSubmit={handleSubmit} ref={form}>
+        <FormH1>Đăng nhập vào tài khoản của bạn</FormH1>
         <FormLinkDiv>
           <FormButtonLinkFb>
             <ButtonLink href="/" target="_blank" aria-label="Facebook">
-              <FaGoogle style={{ marginRight: "5px" }} /> CONTINUE WITH FACEBOOK
+              <FaFacebook style={{ marginRight: "5px" }} />
+              TIẾP TỤC VỚI FACEBOOK
             </ButtonLink>
           </FormButtonLinkFb>
           <FormButtonLinkGm>
             <ButtonLink href="/" target="_blank" aria-label="Gmail">
-              <FaGoogle style={{ marginRight: "5px" }} /> CONTINUE WITH GMAIL
+              <FaGoogle style={{ marginRight: "5px" }} /> TIẾP TỤC VỚI GMAIL
             </ButtonLink>
           </FormButtonLinkGm>
         </FormLinkDiv>
-        <OrDiv>
+        <Line>
+          <OrDiv />
           <Or>OR</Or>
-        </OrDiv>
-        <FormLabel htmlFor="email">Email</FormLabel>
+          <OrDiv />
+        </Line>
+        <FormLabel htmlFor="email">Tài khoản</FormLabel>
         <FormInput
-          id="email"
-          type="email"
-          name="email"
-          onChange={(e) => setDetails({ ...details, email: e.target.value })}
-          value={details.email}
+          id="userName"
+          type="text"
+          value={username}
+          onChange={onChangeUsername}
+          validations={[required]}
           required
-        />       
-        <FormLabel htmlFor="for">Password</FormLabel>
+        />
+        <FormLabel htmlFor="for">Mật khẩu</FormLabel>
         <FormInput
           id="password"
           type="password"
           name="password"
-          onChange={(e) => setDetails({ ...details, password: e.target.value })}
-          value={details.password}
+          value={password}
+          onChange={onChangePassword}
+          validations={[required]}
           required
         />
-        <ErrorP>{Error}</ErrorP>
-        <LinkForgot>Forgot your password?</LinkForgot>
-        <FormButton type="submit">Login</FormButton>
+        {message && (
+          <div>
+            <div role="alert">
+              <ErrorP>{message}</ErrorP>
+            </div>
+          </div>
+        )}
+        <CheckButton style={{ display: "none" }} ref={checkBtn} />
+        <LinkForgot>Quên mật khẩu?</LinkForgot>
+        <FormButton type="submit" disabled={loading}>
+          {loading && <span></span>}
+          <span style={{ fontFamily: "Mulish" }}>Đăng nhập</span>
+        </FormButton>
         <OrDiv />
-        <FormH1>Don't have an account?</FormH1>
+        <FormH1>Bạn chưa có tài khoản?</FormH1>
         <FormButtonLinkSu>
-          <ButtonLink to="/signup">SIGN UP FOR HOMECARE</ButtonLink>
+          <ButtonLink to="/signup">ĐĂNG KÍ HOMECARE</ButtonLink>
         </FormButtonLinkSu>
-      </Form>
+      </FormLogin>
     </>
   );
 }

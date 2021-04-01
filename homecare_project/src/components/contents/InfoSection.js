@@ -30,6 +30,7 @@ const InfoSection = ({
   primary,
   dark,
   dark2,
+  link
 }) => {
   const [hover, setHover] = useState(false);
 
@@ -48,7 +49,7 @@ const InfoSection = ({
                 <SubTitle darkText={darkText}>{description}</SubTitle>
                 <BtnWrap>
                   <Button
-                    to="home"
+                    to={link}
                     smooth={true}
                     duration={true}
                     spy={true}

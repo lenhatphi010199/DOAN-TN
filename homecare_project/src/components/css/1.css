@@ -3,7 +3,16 @@ body {
   margin: 0%;
   padding: 0%;
 }
-
+.style123{
+  color: #01bf71;
+  font-size: 15px;
+  margin-left: 138px
+}
+.style12{
+  color: #01bf71;
+  font-size: 15px;
+  margin-left: 47px
+}
 .register {
   margin-top: 3%;
   padding: 3%;
